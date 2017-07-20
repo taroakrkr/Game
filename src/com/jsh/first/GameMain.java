@@ -24,7 +24,7 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 	private ArrayList<Enemy> enListW = null;
 	private boolean left = false, right = false, up = false, down = false;
 	private boolean start = false, end = false;
-	private int w = 500, h = 500, x = 130, y = 450, xw = 20, xh = 20;
+	private int w = 500, h = 500, x = 230, y = 350, xw = 20, xh = 20;
 	private long sTime;
 	private long eTime;
 	String path;
@@ -105,10 +105,11 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 	public void crashChk() {
 //		Graphics g = this.getGraphics();
 		Polygon p = null;
+		int pix=6;
 		for (int i = 0; i < enListN.size(); i++) {
 			Enemy e = (Enemy) enListN.get(i);
-			int[] xpoints = { x, (x + xw), (x + xw), x };
-			int[] ypoints = { y, y, (y + xh), (y + xh) };
+			int[] xpoints = { x+pix, (x + xw-pix), (x + xw-pix), x+pix };
+			int[] ypoints = { y+pix, y+pix, (y + xh-pix), (y + xh-pix) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
 				start = false;
@@ -118,8 +119,8 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		}
 		for (int i = 0; i < enListS.size(); i++) {
 			Enemy e = (Enemy) enListS.get(i);
-			int[] xpoints = { x, (x + xw), (x + xw), x };
-			int[] ypoints = { y, y, (y + xh), (y + xh) };
+			int[] xpoints = { x+pix, (x + xw-pix), (x + xw-pix), x+pix };
+			int[] ypoints = { y+pix, y+pix, (y + xh-pix), (y + xh-pix) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
 				start = false;
@@ -129,8 +130,8 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		}
 		for (int i = 0; i < enListE.size(); i++) {
 			Enemy e = (Enemy) enListE.get(i);
-			int[] xpoints = { x, (x + xw), (x + xw), x };
-			int[] ypoints = { y, y, (y + xh), (y + xh) };
+			int[] xpoints = { x+pix, (x + xw-pix), (x + xw-pix), x+pix };
+			int[] ypoints = { y+pix, y+pix, (y + xh-pix), (y + xh-pix) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
 				start = false;
@@ -140,8 +141,8 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		}
 		for (int i = 0; i < enListW.size(); i++) {
 			Enemy e = (Enemy) enListW.get(i);
-			int[] xpoints = { x, (x + xw), (x + xw), x };
-			int[] ypoints = { y, y, (y + xh), (y + xh) };
+			int[] xpoints = { x+pix, (x + xw-pix), (x + xw-pix), x+pix };
+			int[] ypoints = { y+pix, y+pix, (y + xh-pix), (y + xh-pix) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
 				start = false;
