@@ -1,14 +1,18 @@
 package com.jsh.first;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Polygon;
+import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferedImage;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+
 
 
 
@@ -23,6 +27,8 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 	private int w = 500, h = 500, x = 130, y = 450, xw = 20, xh = 20;
 	private long sTime;
 	private long eTime;
+	String path;
+	java.awt.Image player;
 
 	public GameMain() {
 		bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
@@ -36,6 +42,16 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
+		this.setLocation(900,400);
+		this.setTitle("제작자 : 조승훈");
+		path = GameMain.class.getResource("").getPath();
+		try {
+			path = java.net.URLDecoder.decode(path ,"UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+//		player = java.awt.Toolkit.getDefaultToolkit().getImage(path+"abc.png");
+		player = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("player_character.png"));
 	}
 
 	public void run() {
@@ -52,6 +68,12 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 					enCnt += 10;
 					keyControl();
 					crashChk();
+				}
+				if (end){
+					enListN.clear();
+					enListS.clear();
+					enListE.clear();
+					enListW.clear();
 				}
 				draw();
 			}
@@ -90,7 +112,7 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 			int[] ypoints = { y, y, (y + xh), (y + xh) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
-				enListN.remove(i);
+//				enListN.remove(i);
 				start = false;
 				end = true;
 				eTime = System.currentTimeMillis();
@@ -102,7 +124,7 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 			int[] ypoints = { y, y, (y + xh), (y + xh) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
-				enListS.remove(i);
+//				enListS.remove(i);
 				start = false;
 				end = true;
 				eTime = System.currentTimeMillis();
@@ -114,7 +136,7 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 			int[] ypoints = { y, y, (y + xh), (y + xh) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
-				enListE.remove(i);
+//				enListE.remove(i);
 				start = false;
 				end = true;
 				eTime = System.currentTimeMillis();
@@ -126,7 +148,7 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 			int[] ypoints = { y, y, (y + xh), (y + xh) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
-				enListW.remove(i);
+//				enListW.remove(i);
 				start = false;
 				end = true;
 				eTime = System.currentTimeMillis();
@@ -138,43 +160,84 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		Graphics gs = bi.getGraphics();
 		gs.setColor(Color.white);
 		gs.fillRect(0, 0, w, h);
-		gs.setColor(Color.black);
-		gs.drawString("Enemy 객체수 : " + (enListN.size()+enListS.size()), 200, 50);
-		gs.drawString("시간 : " + (System.currentTimeMillis()-sTime)/1000, 200, 100);
-		gs.drawString("게임시작 : Enter", 200, 90);
+		gs.setColor(Color.blue);
+//		gs.drawString("Enemy 객체수 : " + (enListN.size()+enListS.size()), 210, 50);
+		gs.drawString("총알피하기 파란직업전문학교", 170, 50);
+		gs.drawString("참고자료 : http://m.cafe.daum.net/rpdlathtmvksao/dYp/2?q=D_aSce_-d5P550&", 40, 65);
+		if(start){
+			gs.drawString("시간 : " + (System.currentTimeMillis()-sTime)/1000+"."+(System.currentTimeMillis()-sTime)/100%10, 220, 110);			
+		}
+		gs.drawString("게임시작 : Enter", 210, 90);
 
 		if (end) {
-			gs.drawString("G A M E     O V E R", 200, 250);
-			gs.drawString((eTime-sTime)/1000+ "초", 240, 300);
+			gs.setFont(new Font("돋움", Font.BOLD, 20));
+			gs.drawString("G A M E     O V E R", 150, 250);
+			gs.drawString((eTime-sTime)/1000+"."+ (eTime-sTime)/1000%10+"초", 230, 300);
 		}
 
-		gs.fillRect(x, y, xw, xh);
+//		gs.fillRect(x, y, xw, xh);
+//		String path =GameMain.class.getResource("").getPath();
+//		try {
+//			path = java.net.URLDecoder.decode(path ,"UTF-8");
+//		} catch (UnsupportedEncodingException e1) {
+//			e1.printStackTrace();
+//		}
+//		java.awt.Image me = java.awt.Toolkit.getDefaultToolkit().getImage(path+"abc.png");
+		gs.drawImage(player, x,y,xw,xh,this);
 		
-		gs.setColor(Color.black);
+//		gs.setColor(Color.MAGENTA);
 		for (int i = 0; i < enListN.size(); i++) {
+			if(i%3==0){
+				gs.setColor(Color.MAGENTA);				
+			}else if(i%3==1){
+				gs.setColor(Color.cyan);
+			}else{
+				gs.setColor(Color.red);
+			}
 			Enemy e = (Enemy) enListN.get(i);
-			gs.fillRect(e.x, e.y, e.w, e.h);
+			gs.fillOval(e.x, e.y, e.w, e.h);
 			if (e.y > h)
 				enListN.remove(i);
 			e.moveEn();
 		}
 		for (int i = 0; i < enListS.size(); i++) {
+			if(i%3==0){
+				gs.setColor(Color.MAGENTA);				
+			}else if(i%3==1){
+				gs.setColor(Color.cyan);
+			}else{
+				gs.setColor(Color.red);
+			}
 			Enemy e = (Enemy) enListS.get(i);
-			gs.fillRect(e.x, e.y, e.w, e.h);
+			gs.fillOval(e.x, e.y, e.w, e.h);
 			if (e.y < 0)
 				enListS.remove(i);
 			e.moveEn();
 		}
 		for (int i = 0; i < enListE.size(); i++) {
+			if(i%3==0){
+				gs.setColor(Color.MAGENTA);				
+			}else if(i%3==1){
+				gs.setColor(Color.cyan);
+			}else{
+				gs.setColor(Color.red);
+			}
 			Enemy e = (Enemy) enListE.get(i);
-			gs.fillRect(e.x, e.y, e.w, e.h);
+			gs.fillOval(e.x, e.y, e.w, e.h);
 			if (e.x < 0)
 				enListE.remove(i);
 			e.moveEn();
 		}
 		for (int i = 0; i < enListW.size(); i++) {
+			if(i%3==0){
+				gs.setColor(Color.MAGENTA);				
+			}else if(i%3==1){
+				gs.setColor(Color.cyan);
+			}else{
+				gs.setColor(Color.red);
+			}
 			Enemy e = (Enemy) enListW.get(i);
-			gs.fillRect(e.x, e.y, e.w, e.h);
+			gs.fillOval(e.x, e.y, e.w, e.h);
 			if (e.x > w)
 				enListW.remove(i);
 			e.moveEn();

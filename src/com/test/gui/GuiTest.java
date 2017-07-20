@@ -33,7 +33,6 @@ class Frame2 extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);//창 크기 변경 불가
 		//setLocation(1000,500);//창이 열리는 위치
-
 		// --------------------------------------------------------------------------
 		// setLayout(new FlowLayout());//기본설정BoderLayout 에서 FlowLayout으로 변경
 		// JButton button = new JButton("버튼");
