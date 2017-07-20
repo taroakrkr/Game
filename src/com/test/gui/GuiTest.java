@@ -1,5 +1,6 @@
 package com.test.gui;
 
+import java.awt.Color;
 import java.awt.Container;
 
 import javax.swing.JButton;
@@ -40,14 +41,17 @@ class Frame2 extends JFrame {
 		// --------------------------------------------------------------------------
 		Container contentPane = this.getContentPane();// 콘텐츠Panel
 		JPanel pane = new JPanel();
+		pane.setBackground(Color.lightGray);
 
 		JButton buttonStart = new JButton("Start");
 		buttonStart.setMnemonic('s');// 버튼 단축키설정
+		buttonStart.setBackground(Color.CYAN);
 
 		final JTextField textPeriod = new JTextField(5);// 텍스트필드
 		JLabel labelPeriod = new JLabel("Input period : ");// 라벨
 
 		JCheckBox checkboxIsRandom = new JCheckBox("Fire randomly");//체크박스
+		checkboxIsRandom.setBackground(Color.pink);
 		checkboxIsRandom.addChangeListener(new ChangeListener() {
 
 			@Override
@@ -55,9 +59,11 @@ class Frame2 extends JFrame {
 				if (((JCheckBox) e.getSource()).isSelected()) {
 					textPeriod.setText("Random");
 					textPeriod.setEnabled(false);
+					textPeriod.setBackground(Color.DARK_GRAY);
 				} else {
 					textPeriod.setText("");
 					textPeriod.setEnabled(true);
+					textPeriod.setBackground(Color.white);
 				}
 			}
 		});
