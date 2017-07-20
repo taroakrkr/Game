@@ -18,10 +18,10 @@ import javax.swing.JFrame;
 
 public class GameMain extends JFrame implements Runnable, KeyListener {
 	private BufferedImage bi = null;
-	private ArrayList enListN = null;
-	private ArrayList enListS = null;
-	private ArrayList enListE = null;
-	private ArrayList enListW = null;
+	private ArrayList<Enemy> enListN = null;
+	private ArrayList<Enemy> enListS = null;
+	private ArrayList<Enemy> enListE = null;
+	private ArrayList<Enemy> enListW = null;
 	private boolean left = false, right = false, up = false, down = false;
 	private boolean start = false, end = false;
 	private int w = 500, h = 500, x = 130, y = 450, xw = 20, xh = 20;
@@ -32,10 +32,10 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 
 	public GameMain() {
 		bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-		enListN = new ArrayList();
-		enListS = new ArrayList();
-		enListE = new ArrayList();
-		enListW = new ArrayList();                                                                                               
+		enListN = new ArrayList<Enemy>();
+		enListS = new ArrayList<Enemy>();
+		enListE = new ArrayList<Enemy>();
+		enListW = new ArrayList<Enemy>();                                                                                               
 		this.addKeyListener(this);
 		this.setSize(w, h);
 		this.setTitle("GameMaining Game");
@@ -50,7 +50,6 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
-//		player = java.awt.Toolkit.getDefaultToolkit().getImage(path+"abc.png");
 		player = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("player_character.png"));
 	}
 
@@ -61,7 +60,7 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 				Thread.sleep(10);
 
 				if (start) {
-					if (enCnt > 1000) {
+					if (enCnt > 1300) {
 						enCreate();
 						enCnt = 0;
 					}
@@ -83,20 +82,20 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 	}
 
 	public void enCreate() {
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < 4; i++) {
 			double nx = Math.random() * (w - xw);
-			double ny = Math.random() * 50;
+			double ny = Math.random();
 			Enemy enN = new EnemyN((int) nx, (int) ny);
 			enListN.add(enN);
 			double sx = Math.random() * (w - xw);
-			double sy = Math.random() * 50 + h-50;
+			double sy = Math.random() + h;
 			Enemy enS = new EnemyS((int) sx, (int) sy);
 			enListS.add(enS);
-			double ex = Math.random() * 50 + w -50;
+			double ex = Math.random()+ w ;
 			double ey = Math.random() * (h - xh);
 			Enemy enE = new EnemyE((int) ex, (int) ey);
-			enListW.add(enE);
-			double wx = Math.random() * 50;
+			enListE.add(enE);
+			double wx = Math.random();
 			double wy = Math.random() * (h - xh);
 			Enemy enW = new EnemyW((int) wx, (int) wy);
 			enListW.add(enW);
@@ -104,7 +103,7 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 	}
 
 	public void crashChk() {
-		Graphics g = this.getGraphics();
+//		Graphics g = this.getGraphics();
 		Polygon p = null;
 		for (int i = 0; i < enListN.size(); i++) {
 			Enemy e = (Enemy) enListN.get(i);
@@ -112,7 +111,6 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 			int[] ypoints = { y, y, (y + xh), (y + xh) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
-//				enListN.remove(i);
 				start = false;
 				end = true;
 				eTime = System.currentTimeMillis();
@@ -124,7 +122,6 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 			int[] ypoints = { y, y, (y + xh), (y + xh) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
-//				enListS.remove(i);
 				start = false;
 				end = true;
 				eTime = System.currentTimeMillis();
@@ -136,7 +133,6 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 			int[] ypoints = { y, y, (y + xh), (y + xh) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
-//				enListE.remove(i);
 				start = false;
 				end = true;
 				eTime = System.currentTimeMillis();
@@ -148,7 +144,6 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 			int[] ypoints = { y, y, (y + xh), (y + xh) };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
-//				enListW.remove(i);
 				start = false;
 				end = true;
 				eTime = System.currentTimeMillis();
@@ -175,72 +170,36 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 			gs.drawString((eTime-sTime)/1000+"."+ (eTime-sTime)/1000%10+"ÃÊ", 230, 300);
 		}
 
-//		gs.fillRect(x, y, xw, xh);
-//		String path =GameMain.class.getResource("").getPath();
-//		try {
-//			path = java.net.URLDecoder.decode(path ,"UTF-8");
-//		} catch (UnsupportedEncodingException e1) {
-//			e1.printStackTrace();
-//		}
-//		java.awt.Image me = java.awt.Toolkit.getDefaultToolkit().getImage(path+"abc.png");
+
 		gs.drawImage(player, x,y,xw,xh,this);
-		
-//		gs.setColor(Color.MAGENTA);
+		gs.setColor(Color.MAGENTA);				
 		for (int i = 0; i < enListN.size(); i++) {
-			if(i%3==0){
-				gs.setColor(Color.MAGENTA);				
-			}else if(i%3==1){
-				gs.setColor(Color.cyan);
-			}else{
-				gs.setColor(Color.red);
-			}
 			Enemy e = (Enemy) enListN.get(i);
 			gs.fillOval(e.x, e.y, e.w, e.h);
 			if (e.y > h)
 				enListN.remove(i);
-			e.moveEn();
+			e.moveEn(i);
 		}
 		for (int i = 0; i < enListS.size(); i++) {
-			if(i%3==0){
-				gs.setColor(Color.MAGENTA);				
-			}else if(i%3==1){
-				gs.setColor(Color.cyan);
-			}else{
-				gs.setColor(Color.red);
-			}
 			Enemy e = (Enemy) enListS.get(i);
 			gs.fillOval(e.x, e.y, e.w, e.h);
 			if (e.y < 0)
 				enListS.remove(i);
-			e.moveEn();
+			e.moveEn(i);
 		}
 		for (int i = 0; i < enListE.size(); i++) {
-			if(i%3==0){
-				gs.setColor(Color.MAGENTA);				
-			}else if(i%3==1){
-				gs.setColor(Color.cyan);
-			}else{
-				gs.setColor(Color.red);
-			}
 			Enemy e = (Enemy) enListE.get(i);
 			gs.fillOval(e.x, e.y, e.w, e.h);
 			if (e.x < 0)
 				enListE.remove(i);
-			e.moveEn();
+			e.moveEn(i);
 		}
 		for (int i = 0; i < enListW.size(); i++) {
-			if(i%3==0){
-				gs.setColor(Color.MAGENTA);				
-			}else if(i%3==1){
-				gs.setColor(Color.cyan);
-			}else{
-				gs.setColor(Color.red);
-			}
 			Enemy e = (Enemy) enListW.get(i);
 			gs.fillOval(e.x, e.y, e.w, e.h);
 			if (e.x > w)
 				enListW.remove(i);
-			e.moveEn();
+			e.moveEn(i);
 		}
 
 		Graphics ge = this.getGraphics();
@@ -331,7 +290,7 @@ abstract class Enemy {
 		this.y = y;
 	}
 	
-	public abstract void moveEn();
+	public abstract void moveEn(int i);
 }
 
 class EnemyN extends Enemy {
@@ -339,7 +298,16 @@ class EnemyN extends Enemy {
 		super(x, y);
 	}
 	@Override
-	public void moveEn() {
+	public void moveEn(int i) {
+		if(i%2==0){
+			if(Math.random() * 5<1){
+				x++;
+			}
+		}else{
+			if(Math.random() * 5<1){
+				x--;
+			}
+		}
 		y++;
 	}
 }
@@ -348,7 +316,16 @@ class EnemyS extends Enemy {
 		super(x, y);
 	}
 	@Override
-	public void moveEn() {
+	public void moveEn(int i) {
+		if(i%2==0){
+			if(Math.random() * 5<1){
+				x++;
+			}
+		}else{
+			if(Math.random() * 5<1){
+				x--;
+			}
+		}
 		y--;
 	}
 }
@@ -357,7 +334,16 @@ class EnemyE extends Enemy {
 		super(x, y);
 	}
 	@Override
-	public void moveEn() {
+	public void moveEn(int i) {
+		if(i%2==0){
+			if(Math.random() * 5<1){
+				y++;
+			}
+		}else{
+			if(Math.random() * 5<1){
+				y--;
+			}
+		}
 		x--;
 	}
 }
@@ -366,7 +352,16 @@ class EnemyW extends Enemy {
 		super(x, y);
 	}
 	@Override
-	public void moveEn() {
+	public void moveEn(int i) {
+		if(i%2==0){
+			if(Math.random() * 5<1){
+				y++;
+			}
+		}else{
+			if(Math.random() * 5<1){
+				y--;
+			}
+		}
 		x++;
 	}
 }
