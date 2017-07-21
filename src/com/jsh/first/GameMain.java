@@ -156,7 +156,6 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		gs.setColor(Color.white);
 		gs.fillRect(0, 0, w, h);
 		gs.setColor(Color.blue);
-//		gs.drawString("Enemy 객체수 : " + (enListN.size()+enListS.size()), 210, 50);
 		gs.drawString("총알피하기 파란직업전문학교", 170, 50);
 		gs.drawString("참고자료 : http://m.cafe.daum.net/rpdlathtmvksao/dYp/2?q=D_aSce_-d5P550&", 40, 65);
 		if(start){
@@ -169,9 +168,8 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 			gs.drawString("G A M E     O V E R", 150, 250);
 			gs.drawString((eTime-sTime)/1000+"."+ (eTime-sTime)/1000%10+"초", 230, 300);
 		}
-
-
 		gs.drawImage(player, x,y,xw,xh,this);
+		
 		gs.setColor(Color.MAGENTA);				
 		for (int i = 0; i < enListN.size(); i++) {
 			Enemy e = (Enemy) enListN.get(i);
