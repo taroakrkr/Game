@@ -105,11 +105,10 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 	public void crashChk() {
 //		Graphics g = this.getGraphics();
 		Polygon p = null;
-		int pix=6;
 		for (int i = 0; i < enListN.size(); i++) {
 			Enemy e = (Enemy) enListN.get(i);
-			int[] xpoints = { x+pix, (x + xw-pix), (x + xw-pix), x+pix };
-			int[] ypoints = { y+pix, y+pix, (y + xh-pix), (y + xh-pix) };
+			int[] xpoints = { x+xw/2, x, x+xw, x+xw/2 };
+			int[] ypoints = { y, y+xh/2, y + xh/2, y+xh };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
 				start = false;
@@ -119,8 +118,8 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		}
 		for (int i = 0; i < enListS.size(); i++) {
 			Enemy e = (Enemy) enListS.get(i);
-			int[] xpoints = { x+pix, (x + xw-pix), (x + xw-pix), x+pix };
-			int[] ypoints = { y+pix, y+pix, (y + xh-pix), (y + xh-pix) };
+			int[] xpoints = { x+xw/2, x, x+xw, x+xw/2 };
+			int[] ypoints = { y, y+xh/2, y + xh/2, y+xh };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
 				start = false;
@@ -130,10 +129,10 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		}
 		for (int i = 0; i < enListE.size(); i++) {
 			Enemy e = (Enemy) enListE.get(i);
-			int[] xpoints = { x+pix, (x + xw-pix), (x + xw-pix), x+pix };
-			int[] ypoints = { y+pix, y+pix, (y + xh-pix), (y + xh-pix) };
+			int[] xpoints = { x+xw/2, x, x+xw, x+xw/2 };
+			int[] ypoints = { y, y+xh/2, y + xh/2, y+xh };
 			p = new Polygon(xpoints, ypoints, 4);
-			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
+			if (p.intersects((double) e.x, (double) e.y, (double) e.w-1, (double) e.h-1)) {
 				start = false;
 				end = true;
 				eTime = System.currentTimeMillis();
@@ -141,8 +140,8 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		}
 		for (int i = 0; i < enListW.size(); i++) {
 			Enemy e = (Enemy) enListW.get(i);
-			int[] xpoints = { x+pix, (x + xw-pix), (x + xw-pix), x+pix };
-			int[] ypoints = { y+pix, y+pix, (y + xh-pix), (y + xh-pix) };
+			int[] xpoints = { x+xw/2, x, x+xw, x+xw/2 };
+			int[] ypoints = { y, y+xh/2, y + xh/2, y+xh };
 			p = new Polygon(xpoints, ypoints, 4);
 			if (p.intersects((double) e.x, (double) e.y, (double) e.w, (double) e.h)) {
 				start = false;
