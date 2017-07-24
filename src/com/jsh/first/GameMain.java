@@ -27,7 +27,6 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 	private int w = 500, h = 500, x = 230, y = 350, xw = 20, xh = 20;
 	private long sTime;
 	private long eTime;
-	String path;
 	java.awt.Image player;
 
 	public GameMain() {
@@ -38,18 +37,11 @@ public class GameMain extends JFrame implements Runnable, KeyListener {
 		enListW = new ArrayList<Enemy>();                                                                                               
 		this.addKeyListener(this);
 		this.setSize(w, h);
-		this.setTitle("GameMaining Game");
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setVisible(true);
 		this.setLocation(900,400);
 		this.setTitle("Á¦ÀÛÀÚ : Á¶½ÂÈÆ");
-		path = GameMain.class.getResource("").getPath();
-		try {
-			path = java.net.URLDecoder.decode(path ,"UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
 		player = Toolkit.getDefaultToolkit().getImage(getClass().getClassLoader().getResource("player_character.png"));
 	}
 
